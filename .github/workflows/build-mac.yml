@@ -22,7 +22,7 @@ jobs:
 
       - name: 実行ファイルを作成（ターミナル実行用）
         run: |
-          pyinstaller --onefile --name my_program main.py
+          pyinstaller --onefile --name my_program source/GUI.py
 
       - name: 成果物を保存
         uses: actions/upload-artifact@v4
