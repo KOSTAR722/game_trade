@@ -1,0 +1,31 @@
+name: Build macOS Executable
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: リポジトリを取得
+        uses: actions/checkout@v4
+
+      - name: Pythonをセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'  # 任意のバージョン
+
+      - name: 依存関係をインストール
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: 実行ファイルを作成（ターミナル実行用）
+        run: |
+          pyinstaller --onefile --name my_program main.py
+
+      - name: 成果物を保存
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-binary
+          path: dist/my_program
